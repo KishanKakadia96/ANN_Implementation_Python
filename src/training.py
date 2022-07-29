@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
 from src.utils.common import read_config  
 from src.utils.data_management import get_data
 from src.utils.model import create_model,save_model, save_plots
@@ -37,19 +36,13 @@ def training(config_path):
 
     #Save plots
 
-    artifacts_dir = config["artifacts"]["artifacts_dir"]
     plot_dir = config["artifacts"]["plot_dir"]
     plot_dir_path = os.path.join(artifacts_dir, plot_dir)
     os.makedirs(plot_dir_path, exist_ok=True)#
     plot_name = config["artifacts"]["plot_name"]
 
-    df = pd.DataFrame(history.history)
-    plot_fig = pd.DataFrame(history.history).plot(figsize=(10, 7))
-    plt.grid(True)
-    plt.show()
-    plt.savefig(plot_dir_path)
-
-    save_plots(df, plot_name, plot_dir)
+    df=pd.DataFrame(history.history)
+    save_plots(df, plot_name, plot_dir_path)
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
