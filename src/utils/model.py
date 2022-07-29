@@ -11,14 +11,14 @@ def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
 
     model_clf.summary()
 
-    # Already initialized in config.yaml file 
+    # Already initialized in config.yaml file
     # LOSS_FUNCTION = "sparse_categorical_crossentropy"  # use => tf.losses.sparse_categorical_crossentropy
     # OPTIMIZER = "SGD"  # or use with custom learning rate => tf.keras.optimizer.SGD(0.02)
     # METRICS = ["accuracy"]
 
     model_clf.compile(loss=LOSS_FUNCTION, optimizer=OPTIMIZER, metrics=METRICS)
-    
-    
+
+
     return model_clf  ##<<< untrained model
 
 def get_unique_filename(filename):
@@ -28,3 +28,9 @@ def save_model(model,model_name, model_dir):
     unique_filename = get_unique_filename(model_name)
     path_to_model= os.path.join(model_dir,unique_filename)
     model.save(path_to_model)
+
+def save_plots(df, plot_name, plot_dir):
+    unique_filename = get_unique_filename(plot_name)
+    path_to_plot = os.path.join(plot_dir, unique_filename)
+    df.save(path_to_plot)
+    pass
