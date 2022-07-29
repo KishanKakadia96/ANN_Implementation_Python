@@ -1,5 +1,6 @@
 import tensorflow as tf
 import time
+import matplotlib.pyplot as plt
 import os
 def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
     LAYERS= [tf.keras.layers.Flatten(input_shape=[28,28], name="inputlayer"),
@@ -32,5 +33,8 @@ def save_model(model,model_name, model_dir):
 def save_plots(df, plot_name, plot_dir):
     unique_filename = get_unique_filename(plot_name)
     path_to_plot = os.path.join(plot_dir, unique_filename)
-    df.save(path_to_plot)
-    pass
+    df.plot(figsize=(10, 7))
+    plt.grid(True)
+    plt.savefig(path_to_plot)
+    plt.show()
+
