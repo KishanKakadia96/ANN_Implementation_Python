@@ -1,9 +1,11 @@
-tensorflow 
+tensorflow~=2.9.1
 matplotlib
 seaborn
 numpy
 pandas
-PyYAML
+PyYAML~=6.0
+setuptools~=61.2.0
 
 ##local package installation
 -e . ### <<< To install local package defined in setup.py  
+
