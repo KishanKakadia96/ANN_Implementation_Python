@@ -4,12 +4,6 @@ import os
 import numpy as np
 import time 
 
-def get_timestamp(name):
-    timestamp = time.asctime().replace(" ", "_").replace(":", "_")
-    unique_name = f"{name}_at_{timestamp}" 
-
-    return unique_name
-
 def get_callbacks(config, X_train):
     logs = config["logs"]
     unique_dir_name = get_timestamp("tb_logs")
