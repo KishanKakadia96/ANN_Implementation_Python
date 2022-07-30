@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from src.utils.common import read_config  
-from src.utils.data_management import get_data, get_log_path
+from src.utils.data_management import get_data
 from src.utils.model import create_model,save_model, save_plots
 from src.utils.callbacks import get_callbacks
 import argparse
@@ -17,12 +17,6 @@ def training(config_path):
     validation_datasize = config["params"]["validation_datasize"]
     
     (X_train, y_train), (X_valid, y_valid), (X_test, y_test) = get_data(validation_datasize)
-
-    log_dir = get_log_path()
-    file_writer = tf.summary.create_file_writer(logdir=log_dir)
-    with file_writer.as_default():
-        images = np.reshape(X_train[10:30], (-1, 28, 28, 1))  ### <<< 20, 28, 28, 1
-        tf.summary.image("20 handritten digit samples", images, max_outputs=25, step=0)
 
 
     LOSS_FUNCTION = config["params"]["loss_functions"]
