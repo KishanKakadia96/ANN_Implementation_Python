@@ -33,7 +33,7 @@ def save_model(model,model_name, model_dir):
 def save_plots(df, plot_name, plot_dir):
     unique_filename = get_unique_filename(plot_name)
     path_to_plot = os.path.join(plot_dir, unique_filename)
-    df.plot(figsize=(10, 7))
+    df.plot(figsize=(13, 10))
     plt.grid(True)
     plt.savefig(path_to_plot)
     plt.show()

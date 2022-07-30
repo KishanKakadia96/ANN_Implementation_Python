@@ -1,8 +1,12 @@
+from gc import callbacks
 import os
 import pandas as pd
+import numpy as np
+import tensorflow as tf
 from src.utils.common import read_config  
-from src.utils.data_management import get_data
+from src.utils.data_management import get_data, get_log_path
 from src.utils.model import create_model,save_model, save_plots
+from src.utils.callbacks import get_callbacks
 import argparse
 
 # os.chdir('C:\\Kishan\\Github\\Artificial_Neural_Network\\ANN_Implementation_Python')
@@ -14,6 +18,13 @@ def training(config_path):
     
     (X_train, y_train), (X_valid, y_valid), (X_test, y_test) = get_data(validation_datasize)
 
+    log_dir = get_log_path()
+    file_writer = tf.summary.create_file_writer(logdir=log_dir)
+    with file_writer.as_default():
+        images = np.reshape(X_train[10:30], (-1, 28, 28, 1))  ### <<< 20, 28, 28, 1
+        tf.summary.image("20 handritten digit samples", images, max_outputs=25, step=0)
+
+
     LOSS_FUNCTION = config["params"]["loss_functions"]
     OPTIMIZER = config["params"]["optimizer"]   
     METRICS = config["params"]["metrics"]
@@ -21,10 +32,12 @@ def training(config_path):
 
     model = create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES)
 
+    CALLBACKS_LIST = get_callbacks(config, X_train)
+
     EPOCHS = config["params"]["epochs"] 
     VALIDATION = (X_valid, y_valid)
 
-    history= model.fit(X_train, y_train, epochs=EPOCHS, validation_data=VALIDATION)
+    history= model.fit(X_train, y_train, epochs=EPOCHS, validation_data=VALIDATION, callbacks=CALLBACKS_LIST)
     #Save model function
 
     artifacts_dir= config["artifacts"]["artifacts_dir"]
