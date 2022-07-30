@@ -1,4 +1,3 @@
-from gc import callbacks
 import os
 import pandas as pd
 import numpy as np
@@ -8,8 +7,6 @@ from src.utils.data_management import get_data
 from src.utils.model import create_model,save_model, save_plots
 from src.utils.callbacks import get_callbacks
 import argparse
-
-# os.chdir('C:\\Kishan\\Github\\Artificial_Neural_Network\\ANN_Implementation_Python')
 
 def training(config_path):
     config = read_config(config_path)
@@ -32,8 +29,8 @@ def training(config_path):
     VALIDATION = (X_valid, y_valid)
 
     history= model.fit(X_train, y_train, epochs=EPOCHS, validation_data=VALIDATION, callbacks=CALLBACKS_LIST)
+    
     #Save model function
-
     artifacts_dir= config["artifacts"]["artifacts_dir"]
     model_dir= config["artifacts"]["model_dir"]
     model_dir_path = os.path.join(artifacts_dir,model_dir)
@@ -42,7 +39,6 @@ def training(config_path):
     save_model(model,model_name,model_dir_path)
 
     #Save plots
-
     plot_dir = config["artifacts"]["plot_dir"]
     plot_dir_path = os.path.join(artifacts_dir, plot_dir)
     os.makedirs(plot_dir_path, exist_ok=True)#
