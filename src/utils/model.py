@@ -6,11 +6,12 @@ import logging
 
 def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
 
-    logging.info("Creating model with")
+    logging.info("Creating model")
     LAYERS= [tf.keras.layers.Flatten(input_shape=[28,28], name="inputlayer"),
     tf.keras.layers.Dense(300, activation="relu", name="hiddenlayer1"),
     tf.keras.layers.Dense(100, activation="relu", name="hiddenlayer2"),
     tf.keras.layers.Dense(NUM_CLASSES, activation="softmax", name="outputlayer1")]
+    logging.info("Layers are created")
 
     model_clf = tf.keras.models.Sequential(LAYERS)
 
@@ -22,6 +23,7 @@ def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
     # METRICS = ["accuracy"]
 
     model_clf.compile(loss=LOSS_FUNCTION, optimizer=OPTIMIZER, metrics=METRICS)
+    logging.info("Compile the model")
 
     return model_clf  ##<<< untrained model
 
@@ -39,6 +41,7 @@ def save_model(model,model_name, model_dir):
 
 
 def save_plots(df, plot_name, plot_dir):
+    logging.info("saving the plots")
     unique_filename = get_unique_filename(plot_name)
     path_to_plot = os.path.join(plot_dir, unique_filename)
     df.plot(figsize=(13, 10))
