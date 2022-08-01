@@ -7,6 +7,13 @@ from src.utils.data_management import get_data
 from src.utils.model import create_model,save_model, save_plots
 from src.utils.callbacks import get_callbacks
 import argparse
+import logging
+
+logging_str = "[%(asctime)s: %(levelname)s: %(module)s] %(message)s"
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+logging.basicConfig(filename= os.path.join(log_dir,"running_logs.log"),level=logging.INFO, format=logging_str, filemode="a")
+
 
 def training(config_path):
     config = read_config(config_path)
